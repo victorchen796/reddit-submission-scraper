@@ -55,7 +55,7 @@ class Subreddits:
 
     def write(self):
         with open(subreddits_path, 'w') as f:
-            f.write(json.dumps(self.subs), indent=2)
+            f.write(json.dumps(self.subs, indent=2))
 
     def exists(self, name):
         if name in self.subs.keys():
@@ -64,41 +64,54 @@ class Subreddits:
 
     def add_subreddit(self, name):
         if (self.exists(name)):
-            log.log("Error: /r/" + name + " not added to subreddits.json: \"" +
+            log.log("ERROR: /r/" + name + " not added to subreddits.json: \"" +
                     name + "\" already exists.")
             raise AlreadyExistsException
 
         self.subs[name] = {
-            'includeString': None,
-            'excludeString': None,
-            'includeFlair': None,
-            'excludeFlair': None,
+            'includeString': [],
+            'excludeString': [],
+            'includeFlair': [],
+            'excludeFlair': [],
             'showUnflaired': True,
             'includeExclude': True
         }
 
-        self.subs.write()
+        self.write()
         log.log("Added /r/" + name + " to subreddits.json.")
 
     def remove_subreddit(self, name):
         if not self.exists(name):
-            log.log("Error: /r/" + name + " not removed from " +
+            log.log("ERROR: /r/" + name + " not removed from " +
                     "subreddits.json: \"" + name + "\" does not exist.")
             raise DoesNotExistException
 
         del self.subs[name]
 
-        self.subs.write()
+        self.write()
         log.log("Removed /r/" + name + " from subreddits.json.")
 
-    def add_filter(self, name, rule, value):
+    def add_rule(self, name, rule, value):
         if not self.exists(name):
-            log.log("Error: \"" + rule + "\" for \"" + value + "\" in /r/" +
+            log.log("ERROR: \"" + rule + "\" for \"" + value + "\" in /r/" +
                     name + " was not added: \"" + name + "\" does not exist.")
             raise DoesNotExistException
 
+        if rule == 'includeString':
+            if value in self.subs[name]['excludeString']:
+                log.log("ERROR: \"includeString\" for \"" + value + "\" in " +
+                        "/r/" + name + " was not added: \"excludeString\" " +
+                        "for \"" + value + "\" already exists.")
+                raise AlreadyExistsException
+        elif rule == 'excludeString':
+            if value in self.subs[name]['includeString']:
+                log.log("ERROR: \"excludeString\" for \"" + value + "\" in " +
+                        "/r/" + name + " was not added: \"includeString\" " +
+                        "for \"" + value + "\" already exists.")
+                raise AlreadyExistsException
+
         if value in self.subs[name][rule]:
-            log.log("Error: \"" + rule + "\" for \"" + value + "\" in /r/" +
+            log.log("ERROR: \"" + rule + "\" for \"" + value + "\" in /r/" +
                     name + " was not added: \"" + rule + "\" for \"" +
                     value + "\" already exists.")
             raise AlreadyExistsException
@@ -110,15 +123,15 @@ class Subreddits:
         self.subs[name][rule].sort()
         self.write()
 
-    def remove_filter(self, name, rule, value):
+    def remove_rule(self, name, rule, value):
         if not self.exists(name):
-            log.log("Error: \"" + rule + "\" for \"" + value + "\" in /r/" +
+            log.log("ERROR: \"" + rule + "\" for \"" + value + "\" in /r/" +
                     name + " was not removed: \"" + name + "\" does not " +
                     "exist.")
             raise DoesNotExistException
 
         if value not in self.subs[name][rule]:
-            log.log("Error: \"" + rule + "\" for \"" + value + "\" in /r/" +
+            log.log("ERROR: \"" + rule + "\" for \"" + value + "\" in /r/" +
                     name + " was not remove: \"" + rule + "\" for \"" + value +
                     "\" does not exist.")
             raise DoesNotExistException
@@ -137,6 +150,8 @@ class Subreddits:
         else:
             log.log("Hiding unflaired posts for /r/" + name + ".")
 
+        self.write()
+
     def toggle_include(self, name):
         self.subs[name]['includeExclude'] = \
             not self.subs[name]['includeExclude']
@@ -146,13 +161,15 @@ class Subreddits:
         else:
             log.log("Toggled exclude mode for flairs for /r/" + name + ".")
 
+        self.write()
+
     def get_subreddits_string(self):
         subreddits_list = [*self.subs]
         subreddits_list.sort()
         subreddit_str = ""
         for name in subreddits_list:
             subreddit_str += "/r/" + name + "\n"
-        log.log("Generated a list of all subreddits in subreddits.json")
+        log.log("Generated a list of all subreddits in subreddits.json.")
         return subreddit_str
 
     def get_rules_string(self):
@@ -174,7 +191,9 @@ class Subreddits:
             rules_str += "<flair mode> " + \
                 ("in" if self.subs[name]['includeExclude'] else "ex") + \
                 "clude only\n\n"
+        log.log("Generated a list of all rules in subreddits.json.")
+        return rules_str
 
     def reset(self):
         self.subs = {}
-        self.write
+        self.write()
