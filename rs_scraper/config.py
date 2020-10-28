@@ -45,9 +45,9 @@ def set_config(client_id, client_secret, user_agent):
     with open(config_path, 'w') as f:
         f.write(json.dumps(configs, indent=2))
 
-    log("Set client_id to \"" + client_id + "\".")
-    log("Set client_secret to \"" + client_secret + "\".")
-    log("Set user_agent to \"" + user_agent + "\".")
+    log("Set client_id to \"" + str(client_id) + "\".")
+    log("Set client_secret to \"" + str(client_secret) + "\".")
+    log("Set user_agent to \"" + str(user_agent) + "\".")
 
 
 def get_config():
