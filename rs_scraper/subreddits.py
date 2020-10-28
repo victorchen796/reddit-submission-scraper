@@ -195,6 +195,6 @@ def rule_list():
 
 
 def reset():
-    for name in subreddit_list():
+    for name in subreddits.keys():
         del subreddits[name]
     write()

@@ -51,16 +51,10 @@ def set_config(client_id, client_secret, user_agent):
 
 
 def get_config():
-    """Returns the config values as a string"""
+    """Returns the config values as a dict"""
     with open(config_path, 'r') as f:
-        configs = json.loads(f.read())
-
-    config_string = "client_id = " + configs['client_id'] + \
-        "\nclient_secret = " + configs['client_secret'] + \
-        "\nuser_agent = " + configs['user_agent'] + "\n"
-
-    log("Got config values")
-    return config_string
+        log("Got config values")
+        return json.loads(f.read())
 
 
 def reset():
