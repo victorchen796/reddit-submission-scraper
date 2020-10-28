@@ -8,7 +8,7 @@ required for PRAW.
 import json
 import os
 
-import log
+from log import log
 
 script_path = os.path.abspath(__file__)
 script_dir = os.path.split(script_path)[0]
@@ -45,9 +45,9 @@ def set_config(client_id, client_secret, user_agent):
     with open(config_path, 'w') as f:
         f.write(json.dumps(configs, indent=2))
 
-    log.log("Set client_id to \"" + client_id + "\".")
-    log.log("Set client_secret to \"" + client_secret + "\".")
-    log.log("Set user_agent + \"" + user_agent + "\".")
+    log("Set client_id to \"" + client_id + "\".")
+    log("Set client_secret to \"" + client_secret + "\".")
+    log("Set user_agent + \"" + user_agent + "\".")
 
 
 def get_config():
@@ -59,7 +59,7 @@ def get_config():
         "\nclient_secret = " + configs['client_secret'] + \
         "\nuser_agent = " + configs['user_agent'] + "\n"
 
-    log.log("Got config values")
+    log("Got config values")
     return config_string
 
 

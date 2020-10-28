@@ -6,6 +6,6 @@ Pipfile
 Pipfile.lock
 
 # testing files
-submission_scraper/test.py
-submission_scraper/test.txt
-submission_scraper/rss_notes.txt
+rs_scraper/test.py
+rs_scraper/test.txt
+rs_scraper/rss_notes.txt

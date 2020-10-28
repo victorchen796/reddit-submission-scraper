@@ -12,5 +12,5 @@ setup(
     url="https://github.com/victorchen796/reddit-submission-scraper",
     license="MIT",
     install_requires=requirements,
-    packages=["submission_scraper"]
+    packages=["rs_scraper"]
 )
