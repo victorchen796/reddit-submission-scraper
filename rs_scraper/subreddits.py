@@ -66,7 +66,7 @@ def add_subreddit(name):
         'includeFlair': [],
         'excludeFlair': [],
         'showUnflaired': True,
-        'includeExclude': True
+        'includeExclude': False
     }
 
     write()
@@ -126,7 +126,7 @@ def remove_rule(name, rule, value):
 
     if value not in subreddits[name][rule]:
         log("ERROR: \"" + rule + "\" for \"" + value + "\" in /r/" + name +
-            " was not remove: \"" + rule + "\" for \"" + value + "\" " +
+            " was not removed: \"" + rule + "\" for \"" + value + "\" " +
             "does not exist.")
         raise DoesNotExistException
     else:
@@ -160,41 +160,26 @@ def toggle_include(name):
     write()
 
 
-def subreddit_list():
-    subreddit_list = [*subreddits]
-    subreddit_list.sort()
-    log("Generated a list of all subreddits in subreddits.json.")
-    return subreddit_list
+def reset_subreddit(name):
+    if not exists(name):
+        log("ERROR: rules for /r/" + name + " were not reset: \"" + name +
+            "\" does not exist.")
+        raise DoesNotExistException
 
+    subreddits[name] = {
+        'includeString': [],
+        'excludeString': [],
+        'includeFlair': [],
+        'excludeFlair': [],
+        'showUnflaired': True,
+        'includeExclude': False
+    }
 
-def rule_list():
-    # TODO: rewrite function
-    #
-    # rules_str = ""
-    # for line in get_subreddits_string().splitlines():
-    #     name = line[3:]
-    #     rules_str += line + "\n"
-    #     for value in subreddits[name]['includeString']:
-    #         rules_str += "<must include string> \"" + value + "\"\n"
-    #     for value in subreddits[name]['excludeString']:
-    #         rules_str += "<must exclude string> \"" + value + "\"\n"
-    #     for value in subreddits[name]['includeFlair']:
-    #         rules_str += "<includes flair> \"" + value + "\"\n"
-    #     for value in subreddits[name]['excludeFlair']:
-    #         rules_str += "<excludes flair> \"" + value + "\"\n"
-    #     rules_str += "<unflaired posts> " + \
-    #         ("shown" if subreddits[name]['showUnflaired'] else "hidden") +
-    #           \
-    #         "\n"
-    #     rules_str += "<flair mode> " + \
-    #         ("in" if subreddits[name]['includeExclude'] else "ex") + \
-    #         "clude only\n\n"
-    # log("Generated a list of all rules in subreddits.json.")
-    # return rules_str
-    pass
+    write()
+    log("Rules for /r/" + name + " were reset.")
 
 
 def reset():
-    for name in subreddits.keys():
+    for name in list(subreddits):
         del subreddits[name]
     write()

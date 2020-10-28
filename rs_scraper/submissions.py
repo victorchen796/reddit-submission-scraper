@@ -39,7 +39,7 @@ def add_submission(name, title, link, author, time, flair):
     }
     submissions[name].append(submission)
     write()
-    log("Added new submission to /r/" + name + ".")
+    # log("Added new submission to /r/" + name + ".")
 
 
 def open_submission(name, index):
@@ -59,6 +59,6 @@ def open_submission(name, index):
 
 
 def clear():
-    for name in submissions.keys():
+    for name in list(submissions):
         del submissions[name]
     write()

@@ -47,7 +47,7 @@ def set_config(client_id, client_secret, user_agent):
 
     log("Set client_id to \"" + client_id + "\".")
     log("Set client_secret to \"" + client_secret + "\".")
-    log("Set user_agent + \"" + user_agent + "\".")
+    log("Set user_agent to \"" + user_agent + "\".")
 
 
 def get_config():
