@@ -9,3 +9,4 @@ Pipfile.lock
 rs_scraper/test.py
 rs_scraper/test.txt
 rs_scraper/rss_notes.txt
+rs_scraper/__pycache__/
