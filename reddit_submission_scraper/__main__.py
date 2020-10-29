@@ -13,5 +13,5 @@ if __name__ == "__main__":
               "reddit-submission-scraper." % (python_version))
         sys.exit(1)
 
-    import rs_scraper.py
-    rs_scraper.main()
+    import reddit_submission_scraper
+    reddit_submission_scraper.main()
