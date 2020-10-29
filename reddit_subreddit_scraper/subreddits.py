@@ -12,10 +12,10 @@ from log import log
 
 # subreddits is a dictionary where each key-value pair is structured as such:
 # '<subreddit name>': {
-#     'includeString': [
+#     'includePhrase': [
 #         '<rules>'
 #     ],
-#     'excludeString': [
+#     'excludePhrase': [
 #         '<rules>'
 #     ],
 #     'includeFlair': [
@@ -61,8 +61,8 @@ def add_subreddit(name):
         raise AlreadyExistsException
 
     subreddits[name] = {
-        'includeString': [],
-        'excludeString': [],
+        'includePhrase': [],
+        'excludePhrase': [],
         'includeFlair': [],
         'excludeFlair': [],
         'showUnflaired': True,
@@ -91,16 +91,16 @@ def add_rule(name, rule, value):
             " was not added: \"" + name + "\" does not exist.")
         raise DoesNotExistException
 
-    if rule == 'includeString':
-        if value in subreddits[name]['excludeString']:
-            log("ERROR: \"includeString\" for \"" + value + "\" in /r/" +
-                name + " was not added: \"excludeString\" for \"" + value +
+    if rule == 'includePhrase':
+        if value in subreddits[name]['excludePhrase']:
+            log("ERROR: \"includePhrase\" for \"" + value + "\" in /r/" +
+                name + " was not added: \"excludePhrase\" for \"" + value +
                 "\" already exists.")
             raise AlreadyExistsException
-    elif rule == 'excludeString':
-        if value in subreddits[name]['includeString']:
-            log("ERROR: \"excludeString\" for \"" + value + "\" in /r/" +
-                name + " was not added: \"includeString\" for \"" + value +
+    elif rule == 'excludePhrase':
+        if value in subreddits[name]['includePhrase']:
+            log("ERROR: \"excludePhrase\" for \"" + value + "\" in /r/" +
+                name + " was not added: \"includePhrase\" for \"" + value +
                 "\" already exists.")
             raise AlreadyExistsException
 
@@ -137,8 +137,8 @@ def remove_rule(name, rule, value):
     write()
 
 
-def toggle_unflaired(name):
-    subreddits[name]['showUnflaired'] = not subreddits[name]['showUnflaired']
+def toggle_unflaired(name, state):
+    subreddits[name]['showUnflaired'] = state
 
     if subreddits[name]['showUnflaired']:
         log("Showing unflaired posts for /r/" + name + ".")
@@ -148,7 +148,7 @@ def toggle_unflaired(name):
     write()
 
 
-def toggle_include(name):
+def toggle_include(name, state):
     subreddits[name]['includeExclude'] = \
         not subreddits[name]['includeExclude']
 
@@ -167,8 +167,8 @@ def reset_subreddit(name):
         raise DoesNotExistException
 
     subreddits[name] = {
-        'includeString': [],
-        'excludeString': [],
+        'includePhrase': [],
+        'excludePhrase': [],
         'includeFlair': [],
         'excludeFlair': [],
         'showUnflaired': True,
