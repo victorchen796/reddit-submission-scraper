@@ -56,11 +56,11 @@ def scrape(time):
 
 
 def filter(subs, name, submission):
-    for string in subs[name]['includeString']:
-        if submission.title.find(string) == -1:
+    for phrase in subs[name]['includePhrase']:
+        if submission.title.find(phrase) == -1:
             return False
-    for string in subs[name]['excludeString']:
-        if submission.title.find(string) != -1:
+    for phrase in subs[name]['excludePhrase']:
+        if submission.title.find(phrase) != -1:
             return False
     if submission.link_flair_text is None:
         if subs[name]['showUnflaired']:
