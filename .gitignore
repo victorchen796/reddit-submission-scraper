@@ -6,7 +6,7 @@ Pipfile
 Pipfile.lock
 
 # testing files
-reddit_subreddit_scraper/test.py
-reddit_subreddit_scraper/test.txt
-reddit_subreddit_scraper/rss_notes.txt
-reddit_subreddit_scraper/__pycache__/
+reddit_submission_scraper/test.py
+reddit_submission_scraper/test.txt
+reddit_submission_scraper/rss_notes.txt
+reddit_submission_scraper/__pycache__/
