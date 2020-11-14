@@ -1,10 +1,10 @@
-certifi>=2020.6.20
+certifi>=2020.11.8
 chardet>=3.0.4
 idna>=2.10
 pkg-resources>=0.0.0
 praw>=7.1.0
 prawcore>=1.5.0
-prompt-toolkit>=1.0.14
+prompt-toolkit==1.0.14
 Pygments>=2.7.2
 PyInquirer>=1.0.3
 regex>=2020.10.28
