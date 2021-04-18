@@ -35,11 +35,10 @@ def submissions():
     return submissions
 
 
-def add_submission(title, author, date, timestamp, subreddit, flair, link):
+def add_submission(title, author, timestamp, subreddit, flair, link):
     submissions['submissions'].append({
         'title': title,
         'author': author,
-        'date': date
         'datetime': datetime.fromtimestamp(timestamp),
         'subreddit': subreddit,
         'flair': flair,
