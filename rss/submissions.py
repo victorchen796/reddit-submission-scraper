@@ -11,8 +11,7 @@ submissions:
         {
             'title': '<title>',
             'author': '<author>',
-            'date': <date>,
-            'time': <time>,
+            'datetime': <datetime>,
             'subreddit': '<subreddit>'
             'flair': '<flair>'
             'link': '<link>'
