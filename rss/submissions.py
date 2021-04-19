@@ -30,15 +30,21 @@ submissions:
 submissions = get_submissions()
 
 
-def submissions():
+def list():
     return submissions
 
 
-def add_submission(title, author, timestamp, subreddit, flair, link):
+def clear():
+    submissions['submissions'] = []
+    submissions['subreddits'] = {}
+    update_submissions(submissions)
+
+
+def add(title, author, datetime, subreddit, flair, link):
     submissions['submissions'].append({
         'title': title,
         'author': author,
-        'datetime': datetime.fromtimestamp(timestamp),
+        'datetime': datetime,
         'subreddit': subreddit,
         'flair': flair,
         'link': link
@@ -47,9 +53,9 @@ def add_submission(title, author, timestamp, subreddit, flair, link):
 
 def write():
     submissions['submissions'].sort(key=get_datetime, reverse=True)
-    for i in range(0, submissions['submissions'].len() - 1):
+    for i in range(0, len(submissions['submissions']) - 1):
         name = submissions['submissions'][i]['subreddit']
-        if not submissions['subreddits'].has_key(name):
+        if not name in submissions['subreddits'].keys():
             submissions['subreddits'][name] = []
         submissions['subreddits'][name].append(i)
     update_submissions(submissions)
@@ -60,4 +66,4 @@ def get_datetime(submission):
 
 
 def open(index):
-    webbrowser.open(submissions['submissions'][i]['link'])
+    webbrowser.open_new_tab(submissions['submissions'][index]['link'])
