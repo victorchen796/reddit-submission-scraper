@@ -41,7 +41,7 @@ def update_submissions(submissions):
     rel_path = 'resources/submissions.json'
     path = os.path.join(script_dir, rel_path)
     with open(path, 'w') as f:
-        f.write(json.dumps(submissions, indent=2))
+        f.write(json.dumps(submissions, indent=2, default=str))
 
 
 def update_subreddits(subreddits):
