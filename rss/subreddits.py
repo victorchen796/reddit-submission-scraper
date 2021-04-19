@@ -28,7 +28,7 @@ def add(name):
     subreddits[name] = {
         'phrases': [],
         'flairs': [],
-        'include': True,
+        'include': False,
         'unflaired': True
     }
     update_subreddits(subreddits)
