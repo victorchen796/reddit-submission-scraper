@@ -28,7 +28,7 @@ def list():
 
 
 def add_phrase(name, phrase):
-    subreddits[name]['phrases'].append(phrase)
+    subreddits[name]['phrases'].append(phrase.lower())
     subreddits[name]['phrases'].sort()
     update_subreddits(subreddits)
 
@@ -39,7 +39,7 @@ def remove_phrase(name, phrase):
 
 
 def add_flair(name, flair):
-    subreddits[name]['flairs'].append(flair)
+    subreddits[name]['flairs'].append(flair.lower())
     subreddits[name]['flairs'].sort()
     update_subreddits(subreddits)
 
@@ -73,11 +73,21 @@ def hide_unflaired(name):
 
 
 def clear_subreddit(name):
-    subreddits[name].clear()
+    subreddits[name] = {
+        'phrases': [],
+        'flairs': [],
+        'include': False,
+        'unflaired': True
+    }
     update_subreddits(subreddits)
 
 
 def clear_all():
     for name in subreddit_list():
-        subreddits[name].clear()
+        subreddits[name] = {
+            'phrases': [],
+            'flairs': [],
+            'include': False,
+            'unflaired': True
+        }
     update_subreddits(subreddits)
