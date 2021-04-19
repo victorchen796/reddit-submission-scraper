@@ -12,7 +12,7 @@ config:
 config = get_config()
 
 
-def view():
+def list():
     return config
 
 
